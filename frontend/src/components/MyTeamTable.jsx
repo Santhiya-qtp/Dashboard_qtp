@@ -61,9 +61,12 @@ const MyTeamTable = () => {
                 value={filterDepartment}
                 onChange={(e) => setFilterDepartment(e.target.value)}
               >
-                <option value="">All</option>
+               <option value="">All</option>
+                <option value="ECE">ECE</option>
+                <option value="IT">IT</option>
+                <option value="MECH">MECH</option>
                 <option value="EEE">EEE</option>
-                <option value="Mechanic">Mechanic</option>
+                <option value="CSE">CSE</option>
                 <option value="Management">Management</option>
               </select>
             </div>
