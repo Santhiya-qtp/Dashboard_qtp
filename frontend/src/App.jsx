@@ -18,6 +18,8 @@ import Permission from "./Pages/Permission";
 import PermissionRequest from "./Pages/PermissionRequest";
 import OrganizationDetails from "./Pages/OrganizationDetails";
 import MyTeam from "./Pages/MyTeam";
+import OrgChart from "./components/OrgChart";
+import AddEmployee from "./Pages/AddEmployee";
 const App = () => {
   return (
     <>
@@ -41,6 +43,8 @@ const App = () => {
           <Route path="/MyDetails" element={<MyDetails />}></Route>
           <Route path="/AdminDashboard" element={<AdminDashboard />}></Route>
           <Route path="/employeeDetails" element={<EmployeeDetails />}></Route>
+          <Route path="/OrgChart" element={<OrgChart/>}></Route>
+          {/* <Route path="/AddEmployee" element={<AddEmployee/>}></Route> */}
           <Route
             path="AdminLeaveRequests"
             element={<AdminLeaveRequest />}

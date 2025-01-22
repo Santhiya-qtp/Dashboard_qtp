@@ -99,3 +99,6 @@ input::placeholder {
 .number-box::-webkit-inner-spin-button{
   appearance: none;
 }
+.add_emp_tint{
+  background: #00000098;
+}

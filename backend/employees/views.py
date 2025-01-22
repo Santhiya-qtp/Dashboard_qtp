@@ -90,8 +90,37 @@ class EmployeeViewSet(APIView):
             employees = Employee.objects.all()
             serializer = EmployeeSerializer(employees, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-
-@api_view(['GET'])
+    def post(self, request):
+        serializer = EmployeeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        try:
+            employee = Employee.objects.get(employee_id=pk)
+        except Employee.DoesNotExist:
+            return Response({"error": "Employee not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = EmployeeSerializer(employee, data=request.data, partial=False)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+    def delete(self, request, pk):
+        try:
+            employee = Employee.objects.get(employee_id=pk)
+            employee.delete()
+            return Response({"message": "Employee deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+        except Employee.DoesNotExist:
+            return Response({"error": "Employee not found."}, status=status.HTTP_404_NOT_FOUND)
+    
+    
+@api_view(['GET'])  
 @permission_classes([IsAuthenticated])
 def get_team_details(request):
     """

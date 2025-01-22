@@ -5,16 +5,18 @@ const OrganizationDetailsSubNav = () => {
     <>
       <div className="main-container mt-4 gap-2 flex  items-center">
         <NavLink
-          to="employeeDetails"
+          to="/employeeDetails"
           style={({ isActive }) => ({
             backgroundColor: isActive ? "#2986CE" : "",
+            color:"black",
+            border:"1px solid #D9D9D9",
           })}
-          className="text-white bg-blue-500 px-4 py-2 font-medium rounded-lg "
+          className="text-white  px-4 py-2 font-medium rounded-lg "
         >
           Employee Details
         </NavLink>
         <NavLink
-          to="employeeDetails"
+          to="/OrgChart"
           style={({ isActive }) => ({
             backgroundColor: isActive ? "#2986CE" : "",
           })}

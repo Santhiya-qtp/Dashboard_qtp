@@ -1,116 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import eye from "../assets/eye-icon-new.svg";
 import EmployeeDetailsGrid from "./EmployeeDetailsGrid";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { Data } from "../context/store";
+import AddEmployeeForm from "./AddEmployeeForm";
 const EmployeeDetailsTable = () => {
+  const { userName } = useContext(Data);
+
   const token = localStorage.getItem("jwtToken");
   const decoded = jwtDecode(token);
   const user_id = decoded.user_id;
-  // Sample employee data
-  const employees = [
-    {
-      id: "101010231331",
-      name: "Surya Chandran",
-      designation: "Designer",
-      department: "EEE",
-      email: "abc@gmail.com",
-      phone: "102343223232",
-    },
-    {
-      id: "101010231332",
-      name: "John Doe",
-      designation: "Engineer",
-      department: "Mechanic",
-      email: "john@gmail.com",
-      phone: "9876543210",
-    },
-    {
-      id: "101010231333",
-      name: "Jane Smith",
-      designation: "Manager",
-      department: "Management",
-      email: "jane@gmail.com",
-      phone: "1234567890",
-    },
-    {
-      id: "101010231333",
-      name: "Jane Smith",
-      designation: "Manager",
-      department: "Management",
-      email: "jane@gmail.com",
-      phone: "1234567890",
-    },
-    {
-      id: "101010231333",
-      name: "Jane Smith",
-      designation: "Manager",
-      department: "Management",
-      email: "jane@gmail.com",
-      phone: "1234567890",
-    },
-    {
-      id: "101010231333",
-      name: "Jane Smith",
-      designation: "Manager",
-      department: "Management",
-      email: "jane@gmail.com",
-      phone: "1234567890",
-    },
-    {
-      id: "101010231333",
-      name: "Jane Smith",
-      designation: "Manager",
-      department: "Management",
-      email: "jane@gmail.com",
-      phone: "1234567890",
-    },
-    {
-      id: "101010231333",
-      name: "Jane Smith",
-      designation: "Manager",
-      department: "Management",
-      email: "jane@gmail.com",
-      phone: "1234567890",
-    },
-    {
-      id: "101010231333",
-      name: "Jane Smith",
-      designation: "Manager",
-      department: "Management",
-      email: "jane@gmail.com",
-      phone: "1234567890",
-    },
-    {
-      id: "101010231333",
-      name: "Jane Smith",
-      designation: "Manager",
-      department: "Management",
-      email: "jane@gmail.com",
-      phone: "1234567890",
-    },
-    {
-      id: "101010231333",
-      name: "Jane Smith",
-      designation: "Manager",
-      department: "Management",
-      email: "jane@gmail.com",
-      phone: "1234567890",
-    },
-    {
-      id: "101010231333",
-      name: "Jane Smith",
-      designation: "Manager",
-      department: "Management",
-      email: "jane@gmail.com",
-      phone: "1234567890",
-    },
-  ];
 
   const [employeeDetails, setEmployeeDetails] = useState([]);
-
+  const [showAddEmpButton, setShowAddEmpButton] = useState(false);
+  const [openAddEmployeeForm, setopenAddEmployeeForm] = useState(false);
+  useEffect(() => {
+    if (userName.toLowerCase().slice(0, 1) == "h") {
+      setShowAddEmpButton(true);
+    }
+  }, [userName]);
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/api/employees/", {
@@ -172,6 +83,18 @@ const EmployeeDetailsTable = () => {
                 <option value="Management">Management</option>
               </select>
             </div>
+            {showAddEmpButton ? (
+              <button
+                onClick={() => {
+                  setopenAddEmployeeForm(!openAddEmployeeForm);
+                }}
+                className="bg-blue-500 rounded-md font-medium px-3 py-1 text-white"
+              >
+                Add Employee
+              </button>
+            ) : (
+              ""
+            )}
           </div>
           {/* grid-view button */}
           <div className="flex items-center space-x-3">
@@ -261,6 +184,7 @@ const EmployeeDetailsTable = () => {
         {/* Employee Table */}
       </div>
       {/* <EmployeeDetailsGrid /> */}
+      {openAddEmployeeForm ? <AddEmployeeForm setopenAddEmployeeForm={setopenAddEmployeeForm} /> : ""}
     </>
   );
 };
