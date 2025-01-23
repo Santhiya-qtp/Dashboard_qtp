@@ -8,8 +8,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email', 'first_name', 'last_name')
 
+
 class EmployeeSerializer(serializers.ModelSerializer):
-    reporting_manager = serializers.CharField()  # Accepts a name, username, or ID
+    reporting_manager = serializers.CharField()
+    user = serializers.CharField()  
 
     class Meta:
         model = Employee
@@ -17,23 +19,31 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
     def validate_reporting_manager(self, value):
         try:
-            # Resolve the manager using a unique field like user_id, name, or email
             manager = Employee.objects.get(employee_first_name=value)
             return manager
         except Employee.DoesNotExist:
             raise serializers.ValidationError("Invalid reporting manager. No matching employee found.")
 
+    def validate_user(self, value):
+        try:
+            user = User.objects.get(username=value)  
+            return user
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Invalid user. No matching user found.")
+
     def create(self, validated_data):
-        # Replace `reporting_manager` with the resolved foreign key object
         reporting_manager = validated_data.pop("reporting_manager")
-        employee = Employee.objects.create(**validated_data, reporting_manager=reporting_manager)
+        user = validated_data.pop("user")
+        employee = Employee.objects.create(
+            **validated_data, reporting_manager=reporting_manager, user=user
+        )
         return employee
 
     def update(self, instance, validated_data):
-        # Handle updates for `reporting_manager`
         if "reporting_manager" in validated_data:
             reporting_manager = validated_data.pop("reporting_manager")
             instance.reporting_manager = reporting_manager
+        if "user" in validated_data:
+            user = validated_data.pop("user")
+            instance.user = user
         return super().update(instance, validated_data)
-
-   

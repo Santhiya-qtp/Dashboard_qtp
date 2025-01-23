@@ -5,11 +5,11 @@ const OrganizationDetailsSubNav = () => {
     <>
       <div className="main-container mt-4 gap-2 flex  items-center">
         <NavLink
-          to="/employeeDetails"
+          to="/organizationDetails"
           style={({ isActive }) => ({
             backgroundColor: isActive ? "#2986CE" : "",
-            color:"black",
-            border:"1px solid #D9D9D9",
+            color: isActive ? "white" : "black",
+            border: "1px solid #D9D9D9",
           })}
           className="text-white  px-4 py-2 font-medium rounded-lg "
         >
@@ -19,12 +19,13 @@ const OrganizationDetailsSubNav = () => {
           to="/OrgChart"
           style={({ isActive }) => ({
             backgroundColor: isActive ? "#2986CE" : "",
+            color: isActive ? "white" : "black",
           })}
           className="text-black bg-gray-100 px-4 py-2 rounded-lg border border-gray-300"
         >
           Organisation Structure
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="employeeDetails"
           style={({ isActive }) => ({
             backgroundColor: isActive ? "#2986CE" : "",
@@ -32,9 +33,9 @@ const OrganizationDetailsSubNav = () => {
           className="text-black bg-gray-100 px-4 py-2 rounded-lg border border-gray-300"
         >
           Organisation Documents
-        </NavLink>
+        </NavLink> */}
 
-        <NavLink
+        {/* <NavLink
           to="employeeDetails"
           style={({ isActive }) => ({
             backgroundColor: isActive ? "#2986CE" : "",
@@ -42,8 +43,8 @@ const OrganizationDetailsSubNav = () => {
           className="text-black bg-gray-100 px-4 py-2  rounded-lg border border-gray-300"
         >
           Articles
-        </NavLink>
-        <NavLink
+        </NavLink> */}
+        {/* <NavLink
           to="employeeDetails"
           style={({ isActive }) => ({
             backgroundColor: isActive ? "#2986CE" : "",
@@ -51,8 +52,8 @@ const OrganizationDetailsSubNav = () => {
           className="text-black bg-gray-100 px-4 py-2  rounded-lg border border-gray-300"
         >
           Polls
-        </NavLink>
-        <NavLink
+        </NavLink> */}
+        {/* <NavLink
           to="employeeDetails"
           style={({ isActive }) => ({
             backgroundColor: isActive ? "#2986CE" : "",
@@ -60,8 +61,8 @@ const OrganizationDetailsSubNav = () => {
           className="text-black bg-gray-100 px-4 py-2  rounded-lg border border-gray-300"
         >
           Announcements
-        </NavLink>
-        <NavLink
+        </NavLink> */}
+        {/* <NavLink
           to="employeeDetails"
           style={({ isActive }) => ({
             backgroundColor: isActive ? "#2986CE" : "",
@@ -69,7 +70,7 @@ const OrganizationDetailsSubNav = () => {
           className="text-black bg-gray-100 px-4 py-2  rounded-lg border border-gray-300"
         >
           Events
-        </NavLink>
+        </NavLink> */}
       </div>
     </>
   );

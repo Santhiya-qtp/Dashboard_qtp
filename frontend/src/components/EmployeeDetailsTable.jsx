@@ -7,6 +7,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { Data } from "../context/store";
 import AddEmployeeForm from "./AddEmployeeForm";
+import { Link } from "react-router-dom";
 const EmployeeDetailsTable = () => {
   const { userName } = useContext(Data);
 
@@ -54,10 +55,10 @@ const EmployeeDetailsTable = () => {
     <>
       <div className="main-container mt-4 px-4">
         {/* Search and Filter Section */}
-        <div className="header flex items-center justify-between mb-4 ">
-          <div className="first-container flex items-center gap-5 w-[80%]">
+        <div className="header flex items-center justify-between mb-4  gap-4">
+          <div className="first-container flex items-center gap-5 w-[80%] ">
             {/* Search Bar */}
-            <div className="search-container flex gap-2 items-center w-[50%] border py-1 px-2 rounded-lg">
+            <div className="search-container flex gap-2 items-center  w-[50%] border py-1 px-2 rounded-lg">
               <Search className="w-[20px] text-gray-600" />
               <input
                 type="text"
@@ -112,7 +113,9 @@ const EmployeeDetailsTable = () => {
               ></div>
             </div>
             {/* Label */}
-            <span className="text-gray-800 font-medium">Grid View</span>
+            <span className="text-gray-800 font-medium text-sm sm:text-md">
+              Grid View
+            </span>
           </div>
         </div>
 
@@ -160,9 +163,11 @@ const EmployeeDetailsTable = () => {
                         {employee.contact_number}
                       </td>
                       <td className=" border-gray-300 px-4 py-2">
-                        <button className="text-blue-500 hover:underline">
-                          <img src={eye} alt="" />
-                        </button>
+                        <Link to={`/profile/${employee.employee_id}`}>
+                          <button className="text-blue-500 hover:underline">
+                            <img src={eye} alt="" />
+                          </button>
+                        </Link>
                       </td>
                     </tr>
                   ))
@@ -184,7 +189,11 @@ const EmployeeDetailsTable = () => {
         {/* Employee Table */}
       </div>
       {/* <EmployeeDetailsGrid /> */}
-      {openAddEmployeeForm ? <AddEmployeeForm setopenAddEmployeeForm={setopenAddEmployeeForm} /> : ""}
+      {openAddEmployeeForm ? (
+        <AddEmployeeForm setopenAddEmployeeForm={setopenAddEmployeeForm} employeeDetails={employeeDetails} />
+      ) : (
+        ""
+      )}
     </>
   );
 };

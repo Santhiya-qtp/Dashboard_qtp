@@ -214,6 +214,7 @@ const AdminLeaveRequest = () => {
         status, // Set the status ("Approved" or "Rejected")
         reason, // Add the rejection reason
       };
+
       console.log("payload : ", payload);
       // First API call (PUT request)
       const updateResponse = await axios.put(

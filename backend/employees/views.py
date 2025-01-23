@@ -225,6 +225,7 @@ def build_org_chart(employee):
         "name": employee.employee_first_name,
         "label":employee.designation,
         "department": employee.departmant,
+        "profileimg": employee.employee_photo.url if employee.employee_photo else "/media/default-profile.png",
         "subordinates": [
             build_org_chart(subordinate) for subordinate in employee.subordinates.all()
         ],

@@ -66,7 +66,7 @@ const DashboardHolidays = () => {
   return (
     <>
       {/* <div className="min-h-screen bg-gray-50 p-6"> */}
-      <div className="rounded-xl hide-scrollbar h-[344px] border overflow-auto ">
+      <div className="rounded-xl hide-scrollbar h-[344px] border w-[204%] max-sm:w-auto md:w-auto overflow-auto ">
         <div className="p-4 ">
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-6  py-1 bg-white ">

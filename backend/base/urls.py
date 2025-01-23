@@ -1,5 +1,6 @@
 from django.urls import path, include
-from .views import CustomTokenObtainPairView, CustomTokenRefreshView, logout, register, is_logged_in, get_username, ForgotPasswordView,ResetPasswordView, change_password_view, get_pending_users, get_user_request,VerifyOTPView
+from .views import CustomTokenObtainPairView, CustomTokenRefreshView, logout, register, is_logged_in, get_username, ForgotPasswordView,ResetPasswordView, change_password_view, get_pending_users, get_user_request,VerifyOTPView, get_all_users
+
 
 urlpatterns = [
     path('login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -15,5 +16,6 @@ urlpatterns = [
     path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     path('get_pending_user/', get_pending_users, name='get_pending_users'),
     path('get_user_request/', get_user_request, name='get_users'),
+    path('get_all_user/', get_all_users, name='get_user_all'),
 
 ]

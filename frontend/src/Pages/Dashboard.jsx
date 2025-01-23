@@ -95,14 +95,14 @@ const Dashboard = () => {
 
             <div className="mx-auto w-[100%] border h-[344px] rounded-xl overflow-auto hide-scrollbar">
               <div className="p-4  ">
-                <div className="flex items-center justify-between mb-6 bg-white py-1">
+                <div className="flex items-center gap-3 justify-between mb-6 bg-white py-1">
                   <h2 className="text-xl font-semibold text-gray-800">
                     Celebrations
                   </h2>
                   <select
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
-                    className="px-3 py-1 border border-gray-200 rounded-md text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="sm:w-[100px] lg:w-auto px-3 py-1 border border-gray-200 rounded-md text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="all">All</option>
                     <option value="birthday">Birthday</option>
@@ -110,43 +110,52 @@ const Dashboard = () => {
                   </select>
                 </div>
 
+                {/* <div className="space-y-4 h-[244px] overflow-auto hide-scrollbar">
+                  
+                </div> */}
                 <div className="space-y-4 h-[244px] overflow-auto hide-scrollbar">
-                  {filteredCelebrations.map((celebration) => (
-                    <div
-                      key={celebration.id}
-                      className="flex items-center space-x-4 p-3 bg-[#FAFAFA] hover:bg-gray-50 rounded-lg transition-colors duration-150"
-                    >
-                      <div className="flex-shrink-0">
-                        <img
-                          src={`http://localhost:8000${celebration.employee_photo}`}
-                          alt={`${celebration.employee_name}'s photo`}
-                          className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
-                        />
-                      </div>
+                  {filteredCelebrations.length > 0 ? (
+                    filteredCelebrations.map((celebration) => (
+                      <div
+                        key={celebration.id}
+                        className="flex items-center space-x-4 p-3 bg-[#FAFAFA] hover:bg-gray-50 rounded-lg transition-colors duration-150"
+                      >
+                        <div className="flex-shrink-0">
+                          <img
+                            src={`http://localhost:8000${celebration.employee_photo}`}
+                            alt={`${celebration.employee_name}'s photo`}
+                            className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
+                          />
+                        </div>
 
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate">
-                          {celebration.employee_name}
-                        </p>
-                        <div className="flex items-center space-x-1">
-                          {celebration.event_type === "Birthday" ? (
-                            <Gift className="w-4 h-4 text-purple-500" />
-                          ) : (
-                            <Briefcase className="w-4 h-4 text-green-500" />
-                          )}
-                          <p className="text-sm text-gray-500">
-                            {celebration.event_type}
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {celebration.employee_name}
                           </p>
+                          <div className="flex items-center space-x-1">
+                            {celebration.event_type === "Birthday" ? (
+                              <Gift className="w-4 h-4 text-purple-500" />
+                            ) : (
+                              <Briefcase className="w-4 h-4 text-green-500" />
+                            )}
+                            <p className="text-sm text-gray-500">
+                              {celebration.event_type}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex-shrink-0">
+                          <span className="text-sm font-medium text-blue-500">
+                            {celebration.date}
+                          </span>
                         </div>
                       </div>
-
-                      <div className="flex-shrink-0 ">
-                        <span className="text-sm font-medium text-blue-500">
-                          {celebration.date}
-                        </span>
-                      </div>
+                    ))
+                  ) : (
+                    <div className="flex items-center justify-center h-[100%]">
+                      <p className="text-gray-600 font-medium text-lg w-[70%] text-center">Looks like it’s a quiet day—no celebrations today!</p>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             </div>

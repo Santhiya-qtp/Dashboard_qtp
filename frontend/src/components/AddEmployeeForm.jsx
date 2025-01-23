@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import close_btn from "../assets/cls_btn.png";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
+import { use } from "react";
+import { Axis3D } from "lucide-react";
+const AddEmployeeForm = ({ setopenAddEmployeeForm, employeeDetails }) => {
   // Authorization
   const token = localStorage.getItem("jwtToken");
   const decoded = jwtDecode(token);
@@ -34,14 +36,18 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
   const [Salutation, setSalutation] = useState("");
   const [employeeUserId, setemployeeUserId] = useState("");
   const [responseFromBackend, setResponseFromBackend] = useState(null);
-
+  const [fetchedUsers, setFetchedUser] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [usernameState, setUsernameState] = useState("");
+  const [reportingManagerName, setReportingManagerName] = useState([]);
+  const [selectedReportingManager, setselectedReportingManager] = useState("");
   function handleSubmit() {
     const employee_details = {
       employee_first_name: firstName,
       employee_last_name: lastName,
       contact_number: mobile_number,
       email: email,
-      user_id: user_id,
+      // user_id: user_id,
       city: city,
       state: state,
       employee_user_id: employeeUserId,
@@ -56,15 +62,18 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
       marital_status: maritialStatus,
       Workstream: workstream,
       departmant: Department,
-      reporting_manager: reportingManager,
+      // reporting_manager: reportingManager,
+      reporting_manager: selectedReportingManager,
       designation: designation,
       date_of_joining: dateOfJoining,
       emergency_contact: emergencyContact,
       emergency_contact_name: emergencyContactName,
       relation: relation,
+      user: usernameState,
     };
+    console.log("emp_Details :", employee_details);
     axios
-      .post("", employee_details, {
+      .post("http://127.0.0.1:8000/api/employees/", employee_details, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,6 +82,46 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
         setResponseFromBackend(response.data);
       });
   }
+
+  // useEffect(() => {
+  //   // Extract reporting managers' first names
+  //   const managerFirstNames = employeeDetails
+  //     // .filter((employee) => employee.reporting_manager) // Filter out null reporting_manager
+  //     .map((employee) => employee.employee_first_name); // Map to first name
+
+  //   setReportingManagerName(managerFirstNames); // Update the state
+  //   console.log("Reporting managers :", managerFirstNames);
+  // }, []);
+
+  useEffect(() => {
+    if (Array.isArray(employeeDetails)) {
+      console.log("employee details 1 : ", employeeDetails);
+      // Extract reporting managers' first names
+      const managerFirstNames = employeeDetails
+        // .filter((employee) => employee.reporting_manager) // Exclude employees without a reporting manager
+        .map((employee) => employee.employee_first_name); // Map to first name
+
+      setReportingManagerName(managerFirstNames); // Update the state
+      console.log("Reporting managers:", managerFirstNames);
+    } else {
+      console.error("employeeDetails is not an array:", employeeDetails);
+    }
+  }, [employeeDetails]);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/get_all_user/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setFetchedUser(response.data);
+        const usernames = response.data.map((item) => item.username);
+        setAllUsers(usernames);
+      });
+  }, [token]);
+
   return (
     <>
       <div className="main-container">
@@ -99,7 +148,7 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
               <div className="box-1 ">
                 <label htmlFor="">Employee user id</label> <br />
                 <input
-                  value={employeeUserId} //####################################################3
+                  value={employeeUserId}
                   onChange={(e) => {
                     setemployeeUserId(e.target.value);
                   }}
@@ -134,7 +183,7 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
                 <input
                   value={lastName}
                   onChange={(e) => {
-                    setFristName(e.target.value);
+                    setLastName(e.target.value);
                   }}
                   type="text"
                   className="mt-2 border border-gray-600 outline-none rounded-lg p-1 w-[100%]"
@@ -145,7 +194,7 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
                 <input
                   value={email}
                   onChange={(e) => {
-                    setLastName(e.target.value);
+                    setEmail(e.target.value);
                   }}
                   type="text"
                   className="mt-2 border border-gray-600 outline-none rounded-lg p-1 w-[100%]"
@@ -189,7 +238,7 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
                 <input
                   value={state}
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    setState(e.target.value);
                   }}
                   type="text"
                   className="mt-2 border border-gray-600 outline-none rounded-lg p-1 w-[100%]"
@@ -219,14 +268,17 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
               </div>
               <div className="box-6">
                 <label htmlFor="">Gender</label> <br />
-                <input
-                  value={gender}
+                <select
                   onChange={(e) => {
                     setgender(e.target.value);
                   }}
-                  type="text"
-                  className="mt-2 border border-gray-600 outline-none rounded-lg p-1 w-[100%]"
-                />
+                  className="w-[100%] outline-none border border-gray-600 py-1 rounded-lg mt-2"
+                >
+                  <option>Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Female">Other</option>
+                </select>
               </div>
               <div className="box-6">
                 <label htmlFor="">Qualification</label> <br />
@@ -251,16 +303,17 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
                 />
               </div>
               <div className="box-6">
-                <label htmlFor="">Maritial status (Single / Married)</label>{" "}
-                <br />
-                <input
-                  value={maritialStatus}
+                <label htmlFor="">Maritial status</label> <br />
+                <select
                   onChange={(e) => {
                     setMaritialStatus(e.target.value);
                   }}
-                  type="text"
-                  className="mt-2 border border-gray-600 outline-none rounded-lg p-1 w-[100%]"
-                />
+                  className="border outline-none rounded-lg w-[100%] mt-2 py-1 border-gray-600"
+                >
+                  <option>Select the marital status</option>
+                  <option value="single">Single</option>
+                  <option value="married">Married</option>
+                </select>
               </div>
               <div className="box-6">
                 <label htmlFor="">Work stream</label> <br />
@@ -284,17 +337,7 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
                   className="mt-2 border border-gray-600 outline-none rounded-lg p-1 w-[100%]"
                 />
               </div>
-              <div className="box-6">
-                <label htmlFor="">Reporting Manager</label> <br />
-                <input
-                  value={reportingManager}
-                  onChange={(e) => {
-                    setReportingManager(e.target.value);
-                  }}
-                  type="text"
-                  className="mt-2 border border-gray-600 outline-none rounded-lg p-1 w-[100%]"
-                />
-              </div>
+
               <div className="box-6">
                 <label htmlFor="">Designation</label> <br />
                 <input
@@ -307,7 +350,7 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
                 />
               </div>
               <div className="box-6">
-                <label htmlFor="">Date of Joingin</label> <br />
+                <label htmlFor="">Date of Joining</label> <br />
                 <input
                   value={dateOfJoining}
                   onChange={(e) => {
@@ -349,6 +392,42 @@ const AddEmployeeForm = ({ setopenAddEmployeeForm }) => {
                   type="text"
                   className="mt-2 border border-gray-600 outline-none rounded-lg p-1 w-[100%]"
                 />
+              </div>
+              <div className="box-6">
+                <label htmlFor="">User</label> <br />
+                <select
+                  onChange={(e) => {
+                    setUsernameState(e.target.value);
+                  }}
+                  className="border border-gray-600 p-2 rounded-lg w-[100%]  outline-none "
+                >
+                  <option value="">Select User</option>
+                  {allUsers.map((item) => {
+                    return <option value={item}>{item}</option>;
+                  })}
+                </select>
+              </div>
+              <div className="box-6">
+                <label htmlFor="">Reporting manager</label> <br />
+                <select
+                  onChange={(e) => {
+                    setselectedReportingManager(e.target.value);
+                  }}
+                  className="border border-gray-600 p-2 rounded-lg w-[100%]  outline-none "
+                >
+                  <option>Select repoting manager</option>
+                  {reportingManagerName.length > 0 ? (
+                    reportingManagerName.map((item, index) => (
+                      <option key={index} value={item}>
+                        {item}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="" disabled>
+                      No reporting managers available
+                    </option>
+                  )}
+                </select>
               </div>
             </div>
             <div className="button-container w-fit m-auto mb-4">

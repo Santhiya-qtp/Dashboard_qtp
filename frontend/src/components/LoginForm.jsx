@@ -179,12 +179,12 @@ function LoginForm() {
         </div>
 
         {/* Right Side - Illustration */}
-        <div className="hidden md:block h-[119.3%]  bg-[#2986CE]     ">
+        <div className="hidden md:block h-[99.80vh]  bg-[#2986CE]     ">
           <div className="h-full flex items-center justify-center">
             <img
               src={loginBg}
               alt="Login illustration"
-              className="w-[70%] h-[80%] "
+              className="w-[70%] h-[100%] "
             />
           </div>
         </div>

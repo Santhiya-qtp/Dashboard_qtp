@@ -6,7 +6,7 @@ import "primeicons/primeicons.css";
 import Navbar from "./Navbar";
 import OrganizationDetailsSubNav from "./OrganizationDetailsSubNav";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const OrgChart = () => {
   // Token decoding
@@ -24,7 +24,7 @@ const OrgChart = () => {
       label: node.name,
       role: node.label,
       department: node.department,
-      profile_img: getImage(node.name), // Add profile images based on name
+      profile_img: node.profileimg, // Add profile images based on name
       expanded: true, // Nodes expanded by default
       children: node.subordinates ? transformData(node.subordinates) : [],
     }));
@@ -51,6 +51,7 @@ const OrgChart = () => {
       .then((response) => {
         const transformedData = transformData(response.data);
         setData(transformedData);
+        console.log("transformedData :", transformedData);
       })
       .catch((error) => console.error("Error fetching org chart data:", error));
   }, [token]);
@@ -58,18 +59,17 @@ const OrgChart = () => {
   // Custom Node Template
   const nodeTemplate = (node) => {
     return (
-      <div className="border rounded-lg p-3 w-[220px] text-center bg-[#F5FAFD] shadow-lg">
-        {/* {node.profile_img && (
+      <div className="border rounded-lg p-3 w-[280px] text-center bg-blue-50 shadow-lg relative">
+        {node.profile_img && (
           <img
-            src={node.profile_img}
-            alt={node.label}
-            className="w-[60px] h-[60px] rounded-full mx-auto mb-3 object-cover"
+            src={`http://localhost:8000${node.profile_img}`}
+            className="w-[40px] h-[40px] rounded-full mx-auto mb-2 object-cover absolute top-[-25px] left-[50%] translate-x-[-50%]"
           />
-        )} */}
-        <p className="font-bold">{node.label}</p>
-        <p className="text-sm text-gray-500">{node.role}</p>
+        )}
+        <p className="font-medium text-black">{node.label}</p>
+        <p className="text-sm text-gray-500 font-medium">{node.role}</p>
         {node.department && (
-          <p className="text-xs text-gray-400 mt-1">{node.department}</p>
+          <p className="text-xs text-gray-700 mt-1">{node.department}</p>
         )}
       </div>
     );
@@ -79,9 +79,9 @@ const OrgChart = () => {
     <div>
       <Navbar />
       <OrganizationDetailsSubNav />
-      <div className="main-container">
+      <div className="main-container ">
         {data ? (
-          <div className="mt-3 h-[500px] overflow-auto">
+          <div className="mt-3 h-[500px] overflow-auto hide-scrollbar ">
             <OrganizationChart
               value={data}
               selectionMode="single"
