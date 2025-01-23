@@ -241,11 +241,71 @@ class LeaveViewSet(viewsets.ModelViewSet):
             leave_request = Leave.objects.get(leave_id=pk)
             new_status = request.data.get("status")
             new_reason = request.data.get("reason")
+            old_status = leave_request.status 
+            print(old_status)
             if new_status in ["Approved", "Rejected"]:
                 leave_request.status = new_status
                 leave_request.reason = new_reason
                 leave_request.save()
-                if new_status == 'Approved':
+                monthly_limit = 3.0 
+                ml_monthly_limit = 7.0
+                print("***************")
+                if old_status == 'Approved' and new_status == 'Rejected':
+                    employee_id = leave_request.employee.employee_id
+                    total_leave_days = leave_request.leave_days
+                    from_process_date = leave_request.fromDate
+                    month_name = calendar.month_name[from_process_date.month]
+
+                    try:
+                        leave_balance = LeaveBalance.objects.get(employee_id=employee_id)
+                    except LeaveBalance.DoesNotExist:
+                        return Response({'error': 'Leave balance not found for employee'}, status=status.HTTP_404_NOT_FOUND)
+
+                    # Parse month_leave_taken
+                    if isinstance(leave_balance.month_leave_taken, str):
+                        leave_usage = json.loads(leave_balance.month_leave_taken)
+                    elif isinstance(leave_balance.month_leave_taken, dict):
+                        leave_usage = leave_balance.month_leave_taken
+                    else:
+                        leave_usage = {}
+
+                    if month_name in leave_usage:
+                        if leave_request.leave_type == 'Casual Leave':
+                            cl_days_used = min(total_leave_days, monthly_limit)  # CL days capped at the monthly limit
+                            lop_days_used = total_leave_days - cl_days_used  # Remaining days deducted as LOP
+                            print(cl_days_used, lop_days_used)
+                            leave_balance.cl_balance += cl_days_used
+                            
+                            leave_balance.lop = max(0, leave_balance.lop - lop_days_used)
+                            
+                            # Adjust the leave usage record for the month
+                            leave_usage[month_name]['CL'] = max(0.0, leave_usage[month_name]['CL'] - total_leave_days)
+                            
+                        elif leave_request.leave_type == 'Medical Leave':
+                            ml_days_used = min(total_leave_days, ml_monthly_limit)  # CL days capped at the monthly limit
+                            lop_days_used = total_leave_days - ml_days_used  # Remaining days deducted as LOP
+                            print(ml_days_used, lop_days_used)
+                            leave_balance.ml_balance += ml_days_used
+                            
+                            leave_balance.lop = max(0, leave_balance.lop - lop_days_used)
+                            
+                            # Adjust the leave usage record for the month
+                            leave_usage[month_name]['ML'] = max(0.0, leave_usage[month_name]['ML'] - total_leave_days)
+
+
+                    # Save the updated leave balance and usage
+                    leave_balance.month_leave_taken = json.dumps(leave_usage)
+                    leave_balance.save()
+
+                    # Update employee's `on_leave` status
+                    employee = leave_request.employee
+                    if employee.on_leave and leave_request.fromDate <= date.today() <= leave_request.toDate:
+                        employee.on_leave = False
+                        employee.save()
+
+                    return Response({'message': 'Leave rejected and leave balance reverted.'}, status=status.HTTP_200_OK)
+                
+                elif new_status == 'Approved':
                     
                     employee_id = leave_request.employee.employee_id
                     from_process_date = leave_request.fromDate
@@ -275,10 +335,10 @@ class LeaveViewSet(viewsets.ModelViewSet):
 
                     if (month_name not in leave_usage) :
                         leave_usage[month_name] = {'CL': 0.0, 'ML': 0.0}
-                    monthly_limit = 3.0 
-                    ml_monthly_limit = 7.0
+                    
                     total_leave_days = leave_request.leave_days
                     print(leave_usage)
+                
                     if leave_request.leave_type == 'Casual Leave':
                         print("Before CL Update:", leave_usage[month_name]['CL'], total_leave_days)
                         leave_usage[month_name]['CL'] += total_leave_days

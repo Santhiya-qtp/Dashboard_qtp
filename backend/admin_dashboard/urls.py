@@ -8,3 +8,4 @@ urlpatterns = [
     path('admin_card/delete/<int:pk>/', AdminCardViewSet.as_view(), name='admin_card_delete'),
     path('approve_user/<int:user_id>/', approve_user, name='approve_user'),  
 ]
+
