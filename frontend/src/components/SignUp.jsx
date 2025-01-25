@@ -335,11 +335,11 @@ function SignUp() {
       </div>
 
       {/* Right Section: Image */}
-      <div className="bg-blue-500   hidden md:flex items-center justify-center ">
+      <div className="bg-blue-500  hidden md:flex items-center justify-center ">
         <img
           src={signUpBg}
           alt="Sign Up Illustration"
-          className="h-auto w-3/4"
+          className="h-[99.95vh] w-3/4"
         />
       </div>
       {alert ? (

@@ -11,7 +11,7 @@ const RejectLeaveModal = ({
   handleRejectLeave, // This is the function to handle rejection
 }) => {
   const [rejectReason, setRejectReason] = useState(""); // State to store the reason
-  
+
   return (
     <>
       <div className="reject-modal h-fit w-[90%] md:w-[80%] p-3 shadow-lg bg-white fixed top-10 left-[50%] translate-x-[-50%] rounded-lg z-[100]">

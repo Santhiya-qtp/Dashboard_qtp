@@ -248,3 +248,10 @@ def get_user_request(request):
             serializer.save()  # Save the new user request
             return Response(serializer.data, status=201)  # Return the created data with status 201 (Created)
         return Response(serializer.errors,status=400)
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  # Restrict access to authenticated users
+def get_all_users(request):
+    users = User.objects.all()  # Fetch all users
+    serializer = UserSerializer(users, many=True)  # Serialize the data using UserSerializer
+    return Response(serializer.data, status=status.HTTP_200_OK)
