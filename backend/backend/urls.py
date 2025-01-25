@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/',include('admin_dashboard.urls')),
     path('api/',include('permissions.urls')),
     path('api/',include('holiday.urls')),
+    path('api/',include('feeds.urls')),
 
 ]
 
