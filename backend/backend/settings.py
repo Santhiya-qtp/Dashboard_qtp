@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'leave',
     'admin_dashboard',
     'permissions',
-    'holiday'
+    'holiday',
+    'feeds'
     
 ]
 
