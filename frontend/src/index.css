@@ -87,18 +87,33 @@ input::placeholder {
   font-weight: 600;
 }
 
-.line-height-200{
+.line-height-200 {
   line-height: 200%;
 }
-.shade{
+.shade {
   background-color: rgba(0, 0, 0, 0.507);
 }
-.permission-tint{
+.permission-tint {
   background: #000000b7;
 }
-.number-box::-webkit-inner-spin-button{
+.number-box::-webkit-inner-spin-button {
   appearance: none;
 }
-.add_emp_tint{
+.add_emp_tint {
   background: #00000098;
+}
+
+@media (min-width: 900px) {
+  .border-right {
+    border-right: 1px solid rgb(226, 226, 226);
+  }
+}
+input::-webkit-inner-spin-button {
+  display: none;
+}
+.tint_del {
+  background-color: rgba(0, 0, 0, 0.623);
+}
+.edit_tint {
+  background-color: rgba(0, 0, 0, 0.623);
 }
