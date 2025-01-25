@@ -123,13 +123,12 @@ const EmployeeDetailsGrid = ({ filteredEmployees }) => {
         },
       })
       .then((response) => {
-        console.log("hai emp details : --------------> ", response.data);
         setEmpDetails(response.data);
       });
   }, [token]);
   return (
     <>
-      <div className="main-container h-[360px] overflow-auto hide-scrollbar">
+      <div className="main-container h-auto overflow-auto hide-scrollbar">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 p-4">
           {filteredEmployees.map((item, index) => {
             return (

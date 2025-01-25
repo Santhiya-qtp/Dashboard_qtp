@@ -10,8 +10,12 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { Axis3D, CodeSquare } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Data } from "../context/store";
+import { useContext } from "react";
 import ProfileDataEditForm from "./ProfileDataEditForm";
 const ProfileHeader = ({ employee }) => {
+  const { userName } = useContext(Data);
+
   // token and Auth
   const token = localStorage.getItem("jwtToken");
   const decoded = jwtDecode(token);
@@ -49,7 +53,7 @@ const ProfileHeader = ({ employee }) => {
 
   return (
     <>
-      <div className="main-container mt-4 border rounded-md bg-[#FAFAFA] grid grid-cols-2 md:grid-cols-12 p-5 gap-3">
+      <div className="main-container mt-4 border rounded-md bg-[#FAFAFA] grid grid-cols-2 md:grid-cols-12 p-5 gap-3 ">
         <div className="container-1 flex gap-4 items-center border-right col-span-3">
           <img
             src={`http://localhost:8000${employee.employee_photo}`}
@@ -104,28 +108,32 @@ const ProfileHeader = ({ employee }) => {
               </span>
               Edit
             </button>
-            <button
-              onClick={() => {
-                setOpenDeleteModal(true);
-              }}
-              className="w-[160px] rounded-lg bg-[#D75378CC] text-white font-medium py-2 text-lg flex items-center justify-center gap-2"
-            >
-              <span>
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 20 22"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M4.1665 21.5C3.52484 21.5 2.97573 21.2717 2.51917 20.8152C2.06261 20.3586 1.83395 19.8091 1.83317 19.1667V4H0.666504V1.66667H6.49984V0.5H13.4998V1.66667H19.3332V4H18.1665V19.1667C18.1665 19.8083 17.9382 20.3578 17.4817 20.8152C17.0251 21.2725 16.4756 21.5008 15.8332 21.5H4.1665ZM15.8332 4H4.1665V19.1667H15.8332V4ZM6.49984 16.8333H8.83317V6.33333H6.49984V16.8333ZM11.1665 16.8333H13.4998V6.33333H11.1665V16.8333Z"
-                    fill="white"
-                  />
-                </svg>
-              </span>
-              Delete
-            </button>
+            {userName == "hruser" ? (
+              <button
+                onClick={() => {
+                  setOpenDeleteModal(true);
+                }}
+                className="w-[160px] rounded-lg bg-[#D75378CC] text-white font-medium py-2 text-lg flex items-center justify-center gap-2"
+              >
+                <span>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 20 22"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M4.1665 21.5C3.52484 21.5 2.97573 21.2717 2.51917 20.8152C2.06261 20.3586 1.83395 19.8091 1.83317 19.1667V4H0.666504V1.66667H6.49984V0.5H13.4998V1.66667H19.3332V4H18.1665V19.1667C18.1665 19.8083 17.9382 20.3578 17.4817 20.8152C17.0251 21.2725 16.4756 21.5008 15.8332 21.5H4.1665ZM15.8332 4H4.1665V19.1667H15.8332V4ZM6.49984 16.8333H8.83317V6.33333H6.49984V16.8333ZM11.1665 16.8333H13.4998V6.33333H11.1665V16.8333Z"
+                      fill="white"
+                    />
+                  </svg>
+                </span>
+                Delete
+              </button>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

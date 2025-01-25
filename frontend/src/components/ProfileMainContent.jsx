@@ -6,7 +6,8 @@ const   ProfileMainContent = ({ employee }) => {
   }
   return (
     <>
-      <div className="main-container mt-4 bg-[#FAFAFA] p-4 rounded-lg border md:h-[330px]">
+    {/* md:h-[330px]  */}
+      <div className="main-container mt-4 bg-[#FAFAFA] p-4 rounded-lg border h-[460px]">
         <div className="subnav-container flex items-center gap-4">
           <button className="bg-blue-500 py-2 px-4 border text-white font-medium rounded-lg">
             Personal Info

@@ -196,7 +196,7 @@ const ProfileDataEditForm = ({ employee, openEdit, setOpenEdit }) => {
   }
   return (
     <>
-      <div className="form-container w-[90%] md:w-[90%]  bg-white rounded-lg absolute top-[20px] left-[50%] translate-x-[-50%] z-[200]">
+      <div className="form-container w-[90%] md:w-[90%]  bg-white rounded-lg absolute top-[30px] left-[50%] translate-x-[-50%] z-[200] xl:h-[90%]">
         <div className="header border-bottom pb-4 flex justify-between p-4">
           <h1 className="font-medium text-lg">Add Employee</h1>
           <div
@@ -214,7 +214,7 @@ const ProfileDataEditForm = ({ employee, openEdit, setOpenEdit }) => {
             Personal Details
           </button>
         </div>
-        <div className="form w-[95%] m-auto mt-5">
+        <div className="form w-[95%] m-auto mt-5 ">
           <div className="form-field-container h-[300px] overflow-auto hide-scrollbar grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="box-1 ">
               <label htmlFor="">Employee user id</label> <br />
@@ -513,7 +513,7 @@ const ProfileDataEditForm = ({ employee, openEdit, setOpenEdit }) => {
         </div>
       </div>
 
-      <div className="edit_tint absolute top-0 right-0 left-0 bottom-0 "></div>
+      <div className="edit_tint fixed top-0 right-0 left-0 bottom-0 "></div>
     </>
   );
 };

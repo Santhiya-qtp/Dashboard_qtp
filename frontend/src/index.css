@@ -115,5 +115,22 @@ input::-webkit-inner-spin-button {
   background-color: rgba(0, 0, 0, 0.623);
 }
 .edit_tint {
-  background-color: rgba(0, 0, 0, 0.623);
+  background-color: rgba(0, 0, 0, 0.74);
+}
+.basic_tint {
+  background: #000000a4;
+}
+.announcement-section::-webkit-scrollbar {
+  width: 9px;
+  background-color: #d1cafa65; /* Background color of the track */
+  border-radius: 4px;
+}
+/* For the scrollbar thumb */
+.announcement-section::-webkit-scrollbar-thumb {
+  background-color: #80a9e286; /* Color of the scrollbar handle */
+  border-radius: 4px; /* Rounded edges for the thumb */
+}
+/* Optional: For hover effect */
+.announcement-section::-webkit-scrollbar-thumb:hover {
+  background-color: #475569; /* Darker color for hover effect */
 }

@@ -21,6 +21,7 @@ import MyTeam from "./Pages/MyTeam";
 import OrgChart from "./components/OrgChart";
 import AddEmployee from "./Pages/AddEmployee";
 import ProfilePage from "./Pages/ProfilePage";
+import FeedPage from "./Pages/FeedPage";
 const App = () => {
   return (
     <>
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="/employeeDetails" element={<EmployeeDetails />}></Route>
           <Route path="/OrgChart" element={<OrgChart />}></Route>
           <Route path="/profile/:id" element={<ProfilePage />}></Route>
+          <Route path="/feeds" element={<FeedPage />}></Route>
           {/* <Route path="/AddEmployee" element={<AddEmployee/>}></Route> */}
           <Route
             path="AdminLeaveRequests"

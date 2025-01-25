@@ -31,7 +31,6 @@ const EmployeeDetailsTable = () => {
         },
       })
       .then((response) => {
-        console.log("hai : --------------> ", response.data);
         setEmployeeDetails(response.data);
       });
   }, [token]);
@@ -190,7 +189,10 @@ const EmployeeDetailsTable = () => {
       </div>
       {/* <EmployeeDetailsGrid /> */}
       {openAddEmployeeForm ? (
-        <AddEmployeeForm setopenAddEmployeeForm={setopenAddEmployeeForm} employeeDetails={employeeDetails} />
+        <AddEmployeeForm
+          setopenAddEmployeeForm={setopenAddEmployeeForm}
+          employeeDetails={employeeDetails}
+        />
       ) : (
         ""
       )}

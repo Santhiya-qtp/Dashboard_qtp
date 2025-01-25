@@ -60,10 +60,15 @@ const Navbar = () => {
               <p>Dashboard</p>
             </div>
           </NavLink>
-          <div className="link flex items-center gap-1">
-            <img src={feeds} className="w-[20px]" />
-            <p>Feeds</p>
-          </div>
+          <NavLink
+            to="/feeds"
+            style={({ isActive }) => ({ color: isActive ? "#2986CE" : "" })}
+          >
+            <div className="link flex items-center gap-1">
+              <img src={feeds} className="w-[20px]" />
+              <p>Feeds</p>
+            </div>
+          </NavLink>
           <NavLink
             to="/MyDetails"
             style={({ isActive }) => ({ color: isActive ? "#2986CE" : "" })}

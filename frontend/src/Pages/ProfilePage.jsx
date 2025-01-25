@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -7,7 +7,10 @@ import Navbar from "../components/Navbar";
 import Demo from "../components/Demo";
 import ProfileHeader from "../components/ProfileHeader";
 import ProfileMainContent from "../components/ProfileMainContent";
+import { Data } from "../context/store";
 const ProfilePage = () => {
+
+
   // token
   const token = localStorage.getItem("jwtToken");
   const decoded = jwtDecode(token);
@@ -44,7 +47,7 @@ const ProfilePage = () => {
       <div className="main-container">
         <Navbar />
         <ProfileHeader employee={selectedEmployee} />
-        <ProfileMainContent employee={selectedEmployee}/>
+        <ProfileMainContent employee={selectedEmployee} />
       </div>
     </>
   );
