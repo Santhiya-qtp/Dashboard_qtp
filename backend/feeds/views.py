@@ -4,6 +4,7 @@ from .models import Announcement, Post, Event
 from .serializers import AnnouncementSerializer, PostSerializer, EventSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from employees.models import Employee
 
 class FeedListView(APIView):
     permission_classes = [IsAuthenticated]
@@ -29,11 +30,27 @@ class AnnouncementListView(APIView):
     
     def post(self, request):
         serializer = AnnouncementSerializer(data=request.data)
-        # input(request.data)
+
         if serializer.is_valid():
-            serializer.save(created_by=request.user) 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            announcement = serializer.save(created_by=request.user)
+
+            user_details = Employee.objects.get(user=request.user)
+
+            employee_name = f"{user_details.employee_first_name} {user_details.employee_last_name}"
+
+            announcement.user_name = employee_name
+            announcement.user_image = user_details.employee_photo.url if user_details.employee_photo else None
+
+            announcement.save()  
+
+            response_data = serializer.data
+            response_data['user_name'] = employee_name
+            response_data['user_image'] = user_details.employee_photo.url if user_details.employee_photo else None
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     
 class EventListView(APIView):
     def get(self, request):

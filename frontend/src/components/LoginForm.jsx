@@ -80,7 +80,7 @@ function LoginForm() {
       ) : (
         ""
       )}
-      <div className="w-full  grid grid-cols-1 md:grid-cols-2 items-center bg-white  ">
+      <div className="w-full  grid grid-cols-1 md:grid-cols-2 items-center bg-white ">
         {/* Left Side - Form */}
         <div className="p-8 h-fit ">
           <div className="mb-8 logo">
@@ -179,7 +179,7 @@ function LoginForm() {
         </div>
 
         {/* Right Side - Illustration */}
-        <div className="hidden md:block h-[99.80vh]  bg-[#2986CE]     ">
+        <div className="hidden md:block h-[99.80vh]  bg-[#2986CE]">
           <div className="h-full flex items-center justify-center">
             <img
               src={loginBg}

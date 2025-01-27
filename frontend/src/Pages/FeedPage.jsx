@@ -14,11 +14,11 @@ const FeedPage = () => {
         <div className="content-container grid grid-cols-12 gap-3">
           <LatestAnnouncement />
           <FeedSection />
-          <UpcomingEvents/>
+          <UpcomingEvents />
         </div>
       </div>
     </>
-  );
+  ); 
 };
 
 export default FeedPage;

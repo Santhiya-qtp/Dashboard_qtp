@@ -7,6 +7,8 @@ class Announcement(models.Model):
     image = models.ImageField(upload_to='announcements/', null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    user_image = models.ImageField(upload_to='announcements/',null=True, blank=True)
+    user_name = models.CharField(max_length=255, null=True, blank=True, default="")
 
     def __str__(self):
         return self.title

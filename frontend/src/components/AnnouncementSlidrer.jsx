@@ -21,7 +21,7 @@ const AnnouncementSlidrer = ({
   return (
     <>
       <div
-        className={`main-container w-[50%] bg-white h-[100%] absolute top-0 right-0 z-[300] shadow-lg transform transition-transform duration-200  ${
+        className={`main-container w-[50%] bg-white h-[100%] overflow-auto absolute top-0 right-0 z-[300] shadow-lg transform transition-transform duration-200  ${
           isAnimating ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -39,35 +39,34 @@ const AnnouncementSlidrer = ({
           </div>
         </div>
         <div className="content-container px-4 ">
-          <img src={landscape} className="w-[100%] h-[189px] rounded-lg" />
+          <img
+            src={`http://localhost:8000/${announcementDetails.image}`}
+            className="w-[100%] h-[240px] rounded-lg object-"
+          />
           <div
-            className={`content mt-2 px-2 announcement-section overflow-auto ${
-              announcementDetails.description.length > 200
-                ? "min-h-[180px] max-h-[240px]"
+            className={`content mt-2 px-2 announcement-section overflow-auto hide-scrollbar bg-gray-50 rounded-lg p-2 ${
+              announcementDetails.content.length > 200
+                ? "min-h-[180px] max-h-[220px]"
                 : "min-h-auto"
             }`}
           >
-            <p className="text-md mt-1 text-gray-600 text-justify">
-              {announcementDetails.description}
+            <p className="text-md mt-1 text-gray-700 text-justify">
+              {announcementDetails.content}
             </p>
           </div>
         </div>
-        <div className="footer px-6 mt-6 ">
+        <div className="footer px-6 mt-6 pb-4">
           <div className="header flex items-center justify-between">
-            <h1 className="text-sm text-gray-700">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim
-              odio
-            </h1>
+            <div className="like-comment-section mt-2 flex gap-4 items-center">
+              <button className="flex items-center gap-2">
+                <img src={like_icon} className="w-5" /> <span>1k</span>
+              </button>
+              <button className="flex items-center gap-2">
+                <img src={comment_icon} className="w-5" /> <span>1k</span>
+              </button>
+            </div>
             <button className="bg-blue-600 px-3 text-white font-medium py-1 rounded-md">
               Acknowledge
-            </button>
-          </div>
-          <div className="like-comment-section mt-2 flex gap-4 items-center">
-            <button className="flex items-center gap-2">
-              <img src={like_icon} className="w-5" /> <span>1k</span>
-            </button>
-            <button className="flex items-center gap-2">
-              <img src={comment_icon} className="w-5" /> <span>1k</span>
             </button>
           </div>
         </div>

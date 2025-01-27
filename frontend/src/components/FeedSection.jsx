@@ -98,7 +98,7 @@ const FeedSection = () => {
                 <div className="post_content">
                   <img
                     src={item.postImage}
-                    className="w-[100%] h-[200px] border object-cover"
+                    className="w-[100%] h-[200px]  object-cover"
                   />
                 </div>
                 <div className="like-section mt-4 flex items-center justify-between px-3 border-bottom pb-2">
