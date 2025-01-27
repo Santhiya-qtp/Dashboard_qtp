@@ -27,14 +27,22 @@ class Event(models.Model):
 
 
 class Post(models.Model):
+    postid = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     image = models.ImageField(upload_to='posts/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    likes = models.ManyToManyField(User, related_name='post_likes', blank=True)
-
-    def like_count(self):
-        return self.likes.count()
 
     def __str__(self):
         return f"Post by {self.user.username}"
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

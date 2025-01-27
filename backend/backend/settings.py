@@ -137,11 +137,11 @@ FRONTEND_URL = "http://localhost:5173"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hrms_db',
+        'NAME': 'hrms',
         'USER': 'root',
         'PASSWORD':'mysql',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '3307',
     }
 }
 
